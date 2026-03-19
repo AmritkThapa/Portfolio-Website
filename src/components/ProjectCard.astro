@@ -1,0 +1,80 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  techStack: string[];
+  link?: string;
+}
+
+const { title, description, techStack, link = "#" } = Astro.props;
+---
+
+<div
+  class="group relative bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden hover:bg-zinc-900/50 hover:border-zinc-700 transition-all duration-300 w-full flex flex-col"
+>
+  <!-- 16:9 Thumbnail Placeholder -->
+  <div
+    class="w-full aspect-video bg-zinc-900 border-b border-zinc-800 relative overflow-hidden group-hover:bg-zinc-800/50 transition-colors"
+  >
+    <div
+      class="absolute inset-0 flex items-center justify-center text-zinc-700"
+    >
+      <svg
+        class="w-10 h-10 opacity-50 transition-opacity group-hover:opacity-100"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
+    </div>
+  </div>
+
+  <div class="p-8 flex flex-col gap-4 flex-1">
+    <div class="flex justify-between items-start">
+      <h3
+        class="text-xl font-medium text-zinc-100 group-hover:text-white transition-colors"
+      >
+        {title}
+      </h3>
+      <a
+        href={link}
+        aria-label={`View ${title}`}
+        class="text-zinc-500 hover:text-zinc-300 transition-colors"
+        target={link !== "#" ? "_blank" : "_self"}
+        rel={link !== "#" ? "noopener noreferrer" : ""}
+      >
+        <svg
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M7 17l9.2-9.2M17 17V7H7"></path>
+        </svg>
+      </a>
+    </div>
+
+    <p class="text-zinc-400 text-sm leading-relaxed flex-1">
+      {description}
+    </p>
+
+    <div class="flex flex-wrap gap-2 mt-2">
+      {
+        techStack.map((tech) => (
+          <span class="text-xs font-medium px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300">
+            {tech}
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>

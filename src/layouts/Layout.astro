@@ -1,0 +1,111 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/global.css";
+
+interface Props {
+	title?: string;
+}
+
+const { title = "Amrit Kumar Thapa - System Integration" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ClientRouter />
+	</head>
+	<body
+		class="bg-zinc-950 text-zinc-300 antialiased min-h-screen flex flex-col items-center selection:bg-zinc-200 selection:text-zinc-950"
+	>
+		<div
+			id="glitch-overlay"
+			class="fixed inset-0 pointer-events-none z-[9999] hidden bg-zinc-950/80 mix-blend-difference"
+		>
+		</div>
+
+		<slot />
+
+		<script>
+			import { navigate } from "astro:transitions/client";
+
+			function init() {
+				// Prevent duplicate executions on page load due to transition bugs
+				if ((window as any)._systemLogPrinted) return;
+				(window as any)._systemLogPrinted = true;
+
+				console.log(
+					"%c[SYSTEM]: Source code detected. Looking for the Lab? Go back to the page and press 'Shift + A' (or triple tap).",
+					"color: #00FF41; font-weight: bold; font-family: monospace; font-size: 14px;",
+				);
+
+				let tapCount = 0;
+				let tapTimeout: number | undefined;
+
+				const triggerArcadia = () => {
+					const overlay = document.getElementById("glitch-overlay");
+					if (overlay) {
+						overlay.classList.remove("hidden");
+						overlay.classList.add("animate-glitch");
+					}
+
+					setTimeout(() => {
+						navigate("/arcadia");
+					}, 500);
+				};
+
+				const handleKeyDown = (e: KeyboardEvent) => {
+					// Don't trigger if user is typing in an input
+					if (
+						["INPUT", "TEXTAREA", "SELECT"].includes(
+							(e.target as HTMLElement).tagName,
+						)
+					) {
+						return;
+					}
+
+					if (e.shiftKey && e.key.toLowerCase() === "a") {
+						e.preventDefault();
+						triggerArcadia();
+					}
+				};
+
+				const handleTouchStart = () => {
+					tapCount++;
+					if (tapCount === 3) {
+						triggerArcadia();
+						tapCount = 0;
+					}
+					clearTimeout(tapTimeout);
+					tapTimeout = window.setTimeout(() => {
+						tapCount = 0;
+					}, 500);
+				};
+
+				document.addEventListener("keydown", handleKeyDown);
+				document.addEventListener("touchstart", handleTouchStart);
+
+				// Cleanup on navigation
+				document.addEventListener(
+					"astro:before-swap",
+					() => {
+						document.removeEventListener("keydown", handleKeyDown);
+						document.removeEventListener(
+							"touchstart",
+							handleTouchStart,
+						);
+						(window as any)._systemLogPrinted = false;
+					},
+					{ once: true },
+				);
+			}
+
+			// Run on initial load and after view transitions
+			document.addEventListener("astro:page-load", init);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,211 @@
+---
+import Layout from "../layouts/Layout.astro";
+import AvatarPlaceholder from "../components/AvatarPlaceholder.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+import { experienceData, skillsData, socialLinks } from "../data/portfolio";
+
+const allProjects = await getCollection("projects");
+const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title="Amrit Kumar Thapa | Java Engineer">
+  <!-- Sticky Minimal Navbar -->
+  <header
+    class="fixed top-0 inset-x-0 z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/60"
+  >
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="font-medium text-zinc-100 tracking-tight text-lg">Amrit.</div>
+      <nav class="flex gap-6 text-sm text-zinc-400 font-medium">
+        <a href="#about" class="hover:text-zinc-100 transition-colors">About</a>
+        <a href="#experience" class="hover:text-zinc-100 transition-colors"
+          >Experience</a
+        >
+        <a href="#skills" class="hover:text-zinc-100 transition-colors"
+          >Skills</a
+        >
+        <a href="#projects" class="hover:text-zinc-100 transition-colors"
+          >Projects</a
+        >
+        <a href="#contact" class="hover:text-zinc-100 transition-colors"
+          >Contact</a
+        >
+      </nav>
+    </div>
+  </header>
+
+  <main
+    class="w-full max-w-6xl mx-auto px-6 pt-32 pb-24 flex flex-col gap-32 relative z-10 font-sans"
+  >
+    <!-- Hero Section -->
+    <section
+      id="about"
+      class="flex flex-col md:flex-row items-center md:items-start gap-12 scroll-mt-32"
+    >
+      <div class="flex-shrink-0">
+        <AvatarPlaceholder />
+      </div>
+      <div
+        class="flex flex-col gap-5 text-center md:text-left items-center md:items-start"
+      >
+        <h1
+          class="text-4xl md:text-5xl font-semibold text-zinc-100 tracking-tight"
+        >
+          Amrit Kumar Thapa
+        </h1>
+        <h2 class="text-xl text-zinc-400 font-medium">
+          Java Spring Boot Engineer
+        </h2>
+
+        <div class="w-12 h-1 bg-zinc-800 rounded-full my-2 hidden md:block">
+        </div>
+
+        <!-- About Me Section -->
+        <div
+          class="text-zinc-400 leading-relaxed text-base max-w-xl flex flex-col gap-4"
+        >
+          <p>
+            I am a Backend Engineer with 2 years of experience specializing in
+            Java and Spring Boot. My core focus is on building scalable backend
+            infrastructure, designing elegant system architectures, and
+            maximizing API efficiency.
+          </p>
+          <p>
+            I thrive on untangling complex logic into refined, maintainable
+            services, ensuring that data integrity and performance are always
+            prioritized.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="flex flex-col gap-10 scroll-mt-32">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-3xl font-semibold text-zinc-100 tracking-tight">
+          Experience
+        </h2>
+      </div>
+      <div class="flex flex-col gap-8">
+        {
+          experienceData.map((exp) => (
+            <div class="flex flex-col md:flex-row gap-4 md:gap-8">
+              <div class="md:w-1/4 text-zinc-400 text-sm font-medium pt-1">
+                {exp.period}
+              </div>
+              <div class="md:w-3/4 flex flex-col gap-3">
+                <h3 class="text-xl font-medium text-zinc-100">
+                  {exp.role} · {exp.company}
+                </h3>
+                <p class="text-zinc-400 text-sm leading-relaxed text-balance">
+                  {exp.description}
+                </p>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  {exp.techStack.map((tech) => (
+                    <span class="px-3 py-1 bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs rounded-full">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="flex flex-col gap-6 scroll-mt-32">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-3xl font-semibold text-zinc-100 tracking-tight">
+          Skills & Technologies
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {
+          skillsData.map((skillGroup) => (
+            <div class="flex flex-col gap-3 p-5 bg-zinc-900/50 border border-zinc-800/80 rounded-xl">
+              <h3 class="text-zinc-100 font-medium">{skillGroup.category}</h3>
+              <p class="text-zinc-400 text-sm leading-relaxed">
+                {skillGroup.skills}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="flex flex-col gap-10 scroll-mt-32">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-3xl font-semibold text-zinc-100 tracking-tight">
+          My Latest Works
+        </h2>
+        <!-- <p class="text-zinc-500 text-sm">
+          A collection of robust systems and services.
+        </p> -->
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+          sortedProjects.map((project) => (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              techStack={project.data.techStack}
+              link={project.data.link}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="flex flex-col gap-6 scroll-mt-32">
+      <div class="flex flex-col gap-2">
+        <h2 class="text-3xl font-semibold text-zinc-100 tracking-tight">
+          Get In Touch
+        </h2>
+        <p class="text-zinc-500 text-sm max-w-md">
+          Interested in collaborating or have a role that fits my backend
+          expertise? I'm always open to discussing system architecture and new
+          opportunities.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        {
+          socialLinks.map((link) => (
+            <a
+              href={link.url}
+              target={link.url.startsWith("http") ? "_blank" : "_self"}
+              rel={link.url.startsWith("http") ? "noopener noreferrer" : ""}
+              class={`px-5 py-2.5 font-medium rounded-lg transition-colors ${
+                link.primary
+                  ? "bg-zinc-100 text-zinc-900 hover:bg-white"
+                  : "bg-zinc-900 border border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+              }`}
+            >
+              {link.name}
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <!-- Hidden Hacker Portal Hint -->
+  <footer
+    class="mt-auto py-12 text-center text-xs text-zinc-600/30 w-full relative z-10 selection:bg-transparent"
+  >
+    <p
+      class="hidden md:block transition-colors duration-1000 hover:text-zinc-500 cursor-default"
+    >
+      [SYSTEM_STATUS]: SECURE_ACCESS_REQUIRED. PRESS 'SHIFT+A' TO DECRYPT_LAB.
+    </p>
+    <p
+      class="md:hidden transition-colors duration-1000 hover:text-zinc-500 cursor-default"
+    >
+      [SYSTEM_STATUS]: SECURE_ACCESS_REQUIRED. TRIPLE TAP TO DECRYPT_LAB.
+    </p>
+  </footer>
+</Layout>

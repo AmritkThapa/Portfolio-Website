@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-spring-green: #00FF41;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+::selection {
+  background-color: var(--color-spring-green);
+  color: #09090b; /* zinc-950 */
+}
+
+@keyframes glitch-anim {
+  0% { clip-path: inset(10% 0 10% 0); background-color: var(--color-spring-green); opacity: 0.1; }
+  20% { clip-path: inset(80% 0 5% 0); background-color: transparent; }
+  40% { clip-path: inset(40% 0 40% 0); background-color: var(--color-spring-green); opacity: 0.1; }
+  60% { clip-path: inset(10% 0 60% 0); background-color: transparent; }
+  80% { clip-path: inset(60% 0 10% 0); background-color: var(--color-spring-green); opacity: 0.1; }
+  100% { clip-path: inset(30% 0 30% 0); background-color: transparent; }
+}
+
+.animate-glitch {
+  animation: glitch-anim 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
