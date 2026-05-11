@@ -193,19 +193,19 @@ const sortedProjects = allProjects.sort((a, b) => a.data.order - b.data.order);
     </section>
   </main>
 
-  <!-- Hidden Hacker Portal Hint -->
+  <!-- Hidden Arcadia Portal Hint -->
   <footer
-    class="mt-auto py-12 text-center text-xs text-zinc-600/30 w-full relative z-10 selection:bg-transparent"
+    class="mt-auto py-12 text-center text-xs w-full relative z-10 selection:bg-transparent"
   >
     <p
-      class="hidden md:block transition-colors duration-1000 hover:text-zinc-500 cursor-default"
+      class="hidden md:block transition-colors duration-1000 hover:text-green-500 cursor-default"
     >
-      [SYSTEM_STATUS]: SECURE_ACCESS_REQUIRED. PRESS 'SHIFT+A' TO DECRYPT_LAB.
+      [SESSION]: IDLE. USE 'SHIFT+A' TO ENTER ARCADIA.
     </p>
     <p
-      class="md:hidden transition-colors duration-1000 hover:text-zinc-500 cursor-default"
+      class="md:hidden transition-colors duration-1000 hover:text-green-500 cursor-default"
     >
-      [SYSTEM_STATUS]: SECURE_ACCESS_REQUIRED. TRIPLE TAP TO DECRYPT_LAB.
+      [SESSION]: IDLE. TRIPLE TAP TO ENTER ARCADIA.
     </p>
   </footer>
 </Layout>

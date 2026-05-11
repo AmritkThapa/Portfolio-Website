@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HackerTerminal from "../components/HackerTerminal.tsx";
+// Trigger Astro hot reload
+---
+
+<Layout title="NET_TERMINAL // ARCADIA">
+  <!-- Scan lines overlay -->
+  <div
+    class="fixed inset-0 pointer-events-none z-[100] opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]"
+  >
+  </div>
+
+  <main class="w-full min-h-screen flex flex-col items-center justify-center relative bg-zinc-950 p-4 sm:p-8">
+    <div class="w-full max-w-4xl flex flex-col h-[70vh] md:h-[80vh] relative z-50">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-cyan-400 font-mono text-xl sm:text-2xl font-bold uppercase tracking-widest flex items-center gap-2">
+          <span class="w-3 h-3 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(0,255,255,0.8)]"></span>
+          NET_Terminal_v1
+        </h1>
+        <div class="flex gap-4">
+          <a href="/arcadia" class="text-xs font-mono text-cyan-500 hover:text-cyan-300 transition-colors uppercase border border-cyan-800/50 px-3 py-1 bg-cyan-950/30 rounded">
+            &lt; Arcadia
+          </a>
+          <a href="/" class="text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors uppercase border border-zinc-800/50 px-3 py-1 bg-zinc-900/30 rounded">
+            Home
+          </a>
+        </div>
+      </div>
+      
+      <div class="flex-1 w-full bg-black rounded-xl p-1 shadow-[0_0_30px_rgba(0,255,255,0.1)] border border-cyan-900/50">
+        <HackerTerminal client:load />
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,41 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="LINUX (WASM) // ARCADIA">
+  <!-- Scan lines overlay -->
+  <div
+    class="fixed inset-0 pointer-events-none z-[100] opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]"
+  >
+  </div>
+
+  <main class="w-full h-screen flex flex-col relative bg-zinc-950">
+    <div class="flex justify-between items-center p-4 border-b border-zinc-800 bg-zinc-950 z-50">
+      <h1 class="text-emerald-500 font-mono text-xl sm:text-2xl font-bold uppercase tracking-widest flex items-center gap-2">
+        <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></span>
+        ALPINE_LINUX_WASM
+      </h1>
+      <div class="flex gap-4">
+        <a href="/arcadia" class="text-xs font-mono text-emerald-500 hover:text-emerald-300 transition-colors uppercase border border-emerald-800/50 px-3 py-1 bg-emerald-950/30 rounded">
+          &lt; Arcadia
+        </a>
+        <a href="/" class="text-xs font-mono text-zinc-500 hover:text-zinc-300 transition-colors uppercase border border-zinc-800/50 px-3 py-1 bg-zinc-900/30 rounded">
+          Home
+        </a>
+      </div>
+    </div>
+    
+    <!-- We use an iframe to embed a real WebAssembly Linux emulator (JSLinux by Fabrice Bellard or v86). -->
+    <!-- This provides a real Linux boot environment directly in the browser. -->
+    <div class="flex-1 w-full bg-black relative">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+         <span class="text-emerald-800 font-mono animate-pulse">Booting WASM Environment...</span>
+      </div>
+      <iframe 
+        src="https://bellard.org/jslinux/vm.html?cpu=riscv64&url=alpine-riscv64.cfg&mem=256" 
+        class="w-full h-full border-none relative z-10 opacity-90 mix-blend-screen"
+        title="Linux WASM Emulator"
+      ></iframe>
+    </div>
+  </main>
+</Layout>
